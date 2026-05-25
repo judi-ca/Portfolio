@@ -4,19 +4,157 @@
 
 :root{
     --background:#f2f3f4;
-    --card-bg:linear-gradient(135deg,#16151D 0%,#1e1d26 50%, #23212c 100%);
+    --card-bg:linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
     --card-bg-hover:#262f3afb;
     --text-primary:#5f8fff;
     --violet:#8b5cf6;
     --paragraph:#222;
-    
+}
+
+body.dark-mode {
+    --background:#0f0f12;
+    --card-bg:linear-gradient(135deg,#1a1a24 0%,#242333 50%, #2a2835 100%);
+    --card-bg-hover:#363a45;
+    --text-primary:#5f8fff;
+    --violet:#8b5cf6;
+    --paragraph:#e0e0e0;
+    background: linear-gradient(135deg, #0f0f12 0%, #1a1620 50%, #0f0f12 100%);
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body.dark-mode::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 50px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 10px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: twinkle 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -2;
+}
+
+@media (max-width: 768px) {
+    body.dark-mode::before {
+        display: none;
+    }
+}
+
+body.dark-mode::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(95, 143, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -2;
+    animation: gradientShift 15s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+@keyframes gradientShift {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(10deg); }
+}
+
+/* Particules flottantes */
+body.dark-mode {
+    background-color: #0f0f12;
+}
+
+body.dark-mode .floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@media (max-width: 768px) {
+    body.dark-mode .floating-particles {
+        display: none;
+    }
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(95, 143, 255, 0.6);
+    border-radius: 50%;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+    }
 }
 *{
     margin: 0;
     padding: 0;
 }
 
-body{background-color: var(--background); padding: 25px;}
+body{
+    background-color: var(--background);
+    padding: 25px;
+    transition: background-color 0.3s ease;
+    color: var(--paragraph);
+    position: relative;
+    z-index: 1;
+}
+
+/* Toggle Dark Mode Button */
+.dark-toggle {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--text-primary);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(95, 143, 255, 0.3);
+}
+
+.dark-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(95, 143, 255, 0.5);
+}
 
 
 /* ================================================================= */
@@ -66,7 +204,7 @@ header p{
 
 .presentation-card .head p{
     font-family: sans-serif;
-    color:#000;
+    color: var(--paragraph);
     margin-bottom: 30px;
 }
 
@@ -80,6 +218,11 @@ header p{
     background-color:var(--text-primary);
     padding: 10px;
     border-radius: 10px;
+}
+
+.presentation-card ul li i {
+    color: #fff;
+    font-size: 20px;
 }
 
 .presentation-card .rigth{
@@ -135,8 +278,773 @@ header p{
             color:var(--text-primary);
         }
 
+        .cards-section .cards .card h4 i {
+            margin-right: 10px;
+        }
+
         .cards-section .cards .card p{
             font-size: 12px;
             font-family: sans-serif;
             margin-top: 12px;
         }
+
+/* ==================================================================
+                    ============  GLOBAL ICONS   ============
+==================================================================== */
+
+.skill-category h3 i,
+.timeline-content h3 i,
+.project-header h3 i {
+    margin-right: 10px;
+    color: var(--text-primary);
+}
+
+.timeline-icon {
+    font-size: 28px;
+    color: var(--text-primary);
+}
+
+.contact-link i {
+    font-size: 18px;
+}
+
+footer {
+    margin-top: 80px;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(95, 143, 255, 0.2);
+    transition: border-color 0.3s ease;
+}
+
+footer p {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: var(--paragraph);
+    opacity: 0.8;
+}
+
+footer p strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+footer p span {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* ==================================================================
+                    ============  SKILLS SECTION   ============
+==================================================================== */
+
+.skills-section {
+    padding: 60px 20px;
+    margin: 60px 0;
+}
+
+.skills-section h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #5f8fff 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 800;
+}
+
+.skills-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--paragraph);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-family: sans-serif;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.skill-category {
+    padding: 30px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(95, 143, 255, 0.2);
+}
+
+.skill-category h3 {
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 700;
+}
+
+.skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-family: sans-serif;
+}
+
+.skill-header span:first-child {
+    color: var(--paragraph);
+    font-weight: 600;
+}
+
+.skill-percent {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.skill-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(95, 143, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #5f8fff 0%, #8b5cf6 100%);
+    border-radius: 10px;
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0 10px rgba(95, 143, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    .skills-section {
+        padding: 40px 15px;
+        margin: 40px 0;
+    }
+
+    .skills-section h2 {
+        font-size: 28px;
+    }
+
+    .skills-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .skill-category {
+        padding: 20px;
+    }
+}
+
+/* ==================================================================
+                    ============  GALLERY SECTION   ============
+==================================================================== */
+
+.gallery-section {
+    padding: 60px 20px;
+    margin: 60px 0;
+}
+
+.gallery-section h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #5f8fff 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 800;
+}
+
+.gallery-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--paragraph);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-family: sans-serif;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card-bg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 40px rgba(95, 143, 255, 0.25);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+}
+
+.gallery-placeholder {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-info {
+    padding: 20px;
+}
+
+.gallery-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+}
+
+.gallery-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+}
+
+.tag.design {
+    background: rgba(95, 143, 255, 0.2);
+    color: #5f8fff;
+}
+
+.tag.creative {
+    background: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+}
+
+.tag.web {
+    background: rgba(100, 200, 255, 0.2);
+    color: #64c8ff;
+}
+
+.tag.code {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+}
+
+.tag.ai {
+    background: rgba(250, 112, 154, 0.2);
+    color: #fa709a;
+}
+
+.gallery-item:hover .tag {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .gallery-section {
+        padding: 40px 15px;
+        margin: 40px 0;
+    }
+
+    .gallery-section h2 {
+        font-size: 28px;
+    }
+
+    .gallery-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .gallery-image {
+        height: 180px;
+    }
+
+    .gallery-placeholder {
+        font-size: 16px;
+    }
+}
+
+/* ==================================================================
+                    ============  TIMELINE SECTION   ============
+==================================================================== */
+
+.timeline-section {
+    padding: 60px 20px;
+    margin: 60px 0;
+}
+
+.timeline-section h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #5f8fff 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 800;
+}
+
+.timeline-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--paragraph);
+    opacity: 0.7;
+    margin-bottom: 50px;
+    font-family: sans-serif;
+}
+
+.timeline-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, #5f8fff 0%, #8b5cf6 100%);
+    top: 0;
+}
+
+.timeline-item {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-marker {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.timeline-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--card-bg);
+    border: 3px solid #5f8fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 20px rgba(95, 143, 255, 0.4);
+    z-index: 2;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-icon {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+    transform: scale(1.15);
+    border-color: #8b5cf6;
+}
+
+.timeline-content {
+    width: calc(50% - 60px);
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-item:hover .timeline-content {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(95, 143, 255, 0.2);
+}
+
+.timeline-date {
+    font-size: 12px;
+    color: var(--text-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-family: sans-serif;
+}
+
+.timeline-content h3 {
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 700;
+}
+
+.timeline-content p {
+    font-size: 14px;
+    color: var(--paragraph);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-family: sans-serif;
+}
+
+.timeline-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(95, 143, 255, 0.15);
+    color: #5f8fff;
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-tag {
+    background: rgba(139, 92, 246, 0.25);
+    color: #8b5cf6;
+}
+
+@media (max-width: 768px) {
+    .timeline-section {
+        padding: 40px 15px;
+        margin: 40px 0;
+    }
+
+    .timeline-section h2 {
+        font-size: 28px;
+    }
+
+    .timeline-container::before {
+        left: 20px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        flex-direction: row !important;
+    }
+
+    .timeline-marker {
+        width: 60px;
+        min-width: 60px;
+    }
+
+    .timeline-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .timeline-content {
+        width: calc(100% - 90px);
+        margin-left: 30px;
+    }
+}
+
+/* ==================================================================
+                    ============  PROJECTS SECTION   ============
+==================================================================== */
+
+.projects-section {
+    padding: 60px 20px;
+    margin: 60px 0;
+}
+
+.projects-section h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #5f8fff 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 800;
+}
+
+.projects-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--paragraph);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-family: sans-serif;
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.project-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(95, 143, 255, 0.1);
+}
+
+.project-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 40px rgba(95, 143, 255, 0.25);
+    border-color: rgba(95, 143, 255, 0.3);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.project-card h3 {
+    font-size: 22px;
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 700;
+}
+
+.project-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(95, 143, 255, 0.2);
+    color: #5f8fff;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: sans-serif;
+}
+
+.project-description {
+    font-size: 14px;
+    color: var(--paragraph);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    font-family: sans-serif;
+}
+
+.project-links {
+    display: flex;
+    gap: 12px;
+}
+
+.project-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #5f8fff 0%, #8b5cf6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: sans-serif;
+}
+
+.project-btn:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px rgba(95, 143, 255, 0.4);
+}
+
+/* ==================================================================
+                    ============  CONTACT SECTION   ============
+==================================================================== */
+
+.contact-section {
+    padding: 60px 20px;
+    margin: 60px 0;
+}
+
+.contact-section h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #5f8fff 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    font-weight: 800;
+}
+
+.contact-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--paragraph);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-family: sans-serif;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-item {
+    display: inline-block;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-family: sans-serif;
+}
+
+.contact-link:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(95, 143, 255, 0.3);
+}
+
+.contact-link.facebook:hover {
+    border-color: #1877F2;
+    color: #1877F2;
+}
+
+.contact-link.whatsapp:hover {
+    border-color: #25D366;
+    color: #25D366;
+}
+
+.contact-link.linkedin:hover {
+    border-color: #0A66C2;
+    color: #0A66C2;
+}
+
+.contact-link.github:hover {
+    border-color: #333;
+    color: #333;
+}
+
+body.dark-mode .contact-link.github:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+.contact-link.email:hover {
+    border-color: #EA4335;
+    color: #EA4335;
+}
+
+.contact-link i {
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .projects-section {
+        padding: 40px 15px;
+        margin: 40px 0;
+    }
+
+    .projects-section h2,
+    .contact-section h2 {
+        font-size: 28px;
+    }
+
+    .projects-container {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 0 10px;
+    }
+
+    .contact-link {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 12px;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .contact-link i {
+        font-size: 20px;
+    }
+
+    .contact-link span {
+        display: none;
+    }
+
+    .contact-link:hover span {
+        display: block;
+    }
+}
