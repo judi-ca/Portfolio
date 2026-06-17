@@ -978,7 +978,7 @@ footer p span {
     justify-content: center;
     gap: 8px;
     padding: 14px 24px;
-    background: var(--card-bg);
+    /* background: var(--card-bg); */
     color: var(--text-primary);
     text-decoration: none;
     border-radius: 12px;
